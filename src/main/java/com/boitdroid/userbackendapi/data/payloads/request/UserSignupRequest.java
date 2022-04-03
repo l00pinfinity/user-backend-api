@@ -11,20 +11,9 @@ import javax.validation.constraints.NotNull;
 @Setter
 @Getter
 public class UserSignupRequest {
-    @NotNull
-    @NotBlank
     private String name;
-
-    @NotNull
-    @NotBlank
     private String username;
-
-    @NotNull
-    @NotBlank
     private String email;
-
-    @NotNull
-    @NotBlank
     private String password;
 
 }
