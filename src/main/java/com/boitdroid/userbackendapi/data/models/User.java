@@ -1,25 +1,32 @@
 package com.boitdroid.userbackendapi.data.models;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
+import java.util.Set;
 
+@Data
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"username"}),@UniqueConstraint(columnNames = {"email"})})
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    @NotBlank
+    private String name;
     @NotBlank
     private String username;
-
     @NotBlank
     private String email;
-
     @NotBlank
     private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"))
+    private Set<Role> roles;
 
     public User() {
     }
