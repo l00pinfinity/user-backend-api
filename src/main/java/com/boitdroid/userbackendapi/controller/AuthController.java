@@ -35,9 +35,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody UserSignupRequest userSignupRequest){
+
+        // add check for username exists in a DB
         if (userRepository.existsByUsername(userSignupRequest.getUsername())){
             return new ResponseEntity<>("Username already taken", HttpStatus.BAD_REQUEST);
         }
+
+        // add check for email exists in DB
         if (userRepository.existsByEmail(userSignupRequest.getEmail())){
             return new ResponseEntity<>("Email is already in use", HttpStatus.BAD_REQUEST);
         }
@@ -48,13 +52,16 @@ public class AuthController {
         }catch (Exception e){
             return MessageResponse.response(e.getMessage(),HttpStatus.MULTI_STATUS,null);
         }
-
     }
 
     @PostMapping("/signin")
     public ResponseEntity<String> authenticateUser(@RequestBody UserLoginRequest userLoginRequest){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequest.getUsernameOrEmail(),userLoginRequest.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User login successfuly",HttpStatus.OK);
+        try{
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userLoginRequest.getUsernameOrEmail(),userLoginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return new ResponseEntity<>("User login successfuly",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.MULTI_STATUS);
+        }
     }
 }
