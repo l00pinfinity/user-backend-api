@@ -6,8 +6,11 @@ import com.boitdroid.userbackendapi.payload.response.ResponseHandler;
 import com.boitdroid.userbackendapi.repository.UserRepository;
 import com.boitdroid.userbackendapi.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

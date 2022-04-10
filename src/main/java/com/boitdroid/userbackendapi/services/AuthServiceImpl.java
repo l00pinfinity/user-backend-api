@@ -4,6 +4,7 @@ import com.boitdroid.userbackendapi.models.Users;
 import com.boitdroid.userbackendapi.payload.request.AuthRequest;
 import com.boitdroid.userbackendapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,11 +15,14 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Users createAccount(AuthRequest newUser) {
         Users user = new Users();
         user.setUsername(newUser.getUsername());
-        user.setPassword(newUser.getPassword());
+        user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(user);
         return user;
     }
