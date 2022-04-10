@@ -1,4 +1,4 @@
-package com.boitdroid.userbackendapi;
+package com.boitdroid.userbackendapi.models;
 
 public enum Status {
     SUCCESS,

@@ -1,4 +1,4 @@
-package com.boitdroid.userbackendapi;
+package com.boitdroid.userbackendapi.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,21 +8,19 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class Users {
     private @Id
     @GeneratedValue
     long id;
     private String username;
     private String password;
-    private boolean loggedIn;
 
-    public User() {
+    public Users() {
     }
 
-    public User( String username, String password) {
+    public Users(String username, String password) {
         this.username = username;
         this.password = password;
-        this.loggedIn = false;
     }
 
     public long getId() {
@@ -45,36 +43,27 @@ public class User {
         this.password = password;
     }
 
-    public boolean isLoggedIn() {
-        return loggedIn;
-    }
-
-    public void setLoggedIn(boolean loggedIn) {
-        this.loggedIn = loggedIn;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof Users)) return false;
+        Users user = (Users) o;
         return Objects.equals(username, user.username) &&
                 Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password,
-                loggedIn);
+        return Objects.hash(id, username, password);
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Users{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", loggedIn=" + loggedIn +
                 '}';
     }
 }
