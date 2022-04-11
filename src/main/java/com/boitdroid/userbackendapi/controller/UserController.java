@@ -39,6 +39,9 @@ public class UserController {
             if (user.getUsername().equals(authRequest.getUsername())){
                 return ResponseHandler.messageResponse("Account with username already exists", HttpStatus.MULTI_STATUS);
             }
+            if (user.getEmail().equals(authRequest.getEmail())){
+                return ResponseHandler.messageResponse("Account with email already exists", HttpStatus.MULTI_STATUS);
+            }
         }
         try{
             Users newUser = authService.createAccount(authRequest);

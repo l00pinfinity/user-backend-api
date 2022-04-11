@@ -21,6 +21,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     public Users createAccount(AuthRequest newUser) {
         Users user = new Users();
+        user.setEmail(newUser.getEmail());
         user.setUsername(newUser.getUsername());
         user.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userRepository.save(user);
