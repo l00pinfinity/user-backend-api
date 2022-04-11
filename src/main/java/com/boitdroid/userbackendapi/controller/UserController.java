@@ -37,14 +37,14 @@ public class UserController {
         List<Users> users = authService.getAllUsers();
         for (Users user:users){
             if (user.getUsername().equals(authRequest.getUsername())){
-                return ResponseHandler.response("Account with username already exists", HttpStatus.MULTI_STATUS,null);
+                return ResponseHandler.messageResponse("Account with username already exists", HttpStatus.MULTI_STATUS);
             }
         }
         try{
             Users newUser = authService.createAccount(authRequest);
-            return ResponseHandler.response("Account created successfully", HttpStatus.CREATED,authRequest.getUsername());
+            return ResponseHandler.messageResponse("Account created successfully", HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseHandler.response("Account creation failed", HttpStatus.MULTI_STATUS,null);
+            return ResponseHandler.messageResponse("Account creation failed", HttpStatus.MULTI_STATUS);
         }
     }
 
@@ -54,11 +54,11 @@ public class UserController {
 
         for (Users other : users) {
             if (other.getUsername().equals(authRequest.getUsername())) {
-                return ResponseHandler.response("Logged in successfully",HttpStatus.OK,authRequest.getUsername());
+                return ResponseHandler.messageResponse("Logged in successfully",HttpStatus.OK);
             }
         }
 
-        return ResponseHandler.response("Failed to login",HttpStatus.MULTI_STATUS,null);
+        return ResponseHandler.messageResponse("Failed to login",HttpStatus.MULTI_STATUS);
     }
 }
 
