@@ -6,8 +6,11 @@ import com.boitdroid.userbackendapi.payload.response.ResponseHandler;
 import com.boitdroid.userbackendapi.repository.UserRepository;
 import com.boitdroid.userbackendapi.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,14 +37,17 @@ public class UserController {
         List<Users> users = authService.getAllUsers();
         for (Users user:users){
             if (user.getUsername().equals(authRequest.getUsername())){
-                return ResponseHandler.response("Account with username already exists", HttpStatus.MULTI_STATUS,null);
+                return ResponseHandler.messageResponse("Account with username already exists", HttpStatus.MULTI_STATUS);
+            }
+            if (user.getEmail().equals(authRequest.getEmail())){
+                return ResponseHandler.messageResponse("Account with email already exists", HttpStatus.MULTI_STATUS);
             }
         }
         try{
             Users newUser = authService.createAccount(authRequest);
-            return ResponseHandler.response("Account created successfully", HttpStatus.CREATED,authRequest.getUsername());
+            return ResponseHandler.messageResponse("Account created successfully", HttpStatus.CREATED);
         }catch (Exception e){
-            return ResponseHandler.response("Account creation failed", HttpStatus.MULTI_STATUS,null);
+            return ResponseHandler.messageResponse("Account creation failed", HttpStatus.MULTI_STATUS);
         }
     }
 
@@ -51,11 +57,11 @@ public class UserController {
 
         for (Users other : users) {
             if (other.getUsername().equals(authRequest.getUsername())) {
-                return ResponseHandler.response("Logged in successfully",HttpStatus.OK,authRequest.getUsername());
+                return ResponseHandler.messageResponse("Logged in successfully",HttpStatus.OK);
             }
         }
 
-        return ResponseHandler.response("Failed to login",HttpStatus.MULTI_STATUS,null);
+        return ResponseHandler.messageResponse("Failed to login",HttpStatus.MULTI_STATUS);
     }
 }
 

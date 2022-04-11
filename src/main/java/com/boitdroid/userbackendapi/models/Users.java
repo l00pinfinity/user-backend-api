@@ -12,15 +12,25 @@ public class Users {
     private @Id
     @GeneratedValue
     long id;
+    private String email;
     private String username;
     private String password;
 
     public Users() {
     }
 
-    public Users(String username, String password) {
+    public Users(String email, String username, String password) {
+        this.email  = email;
         this.username = username;
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {
@@ -43,25 +53,24 @@ public class Users {
         this.password = password;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Users)) return false;
-        Users user = (Users) o;
-        return Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password);
+        if (o == null || getClass() != o.getClass()) return false;
+        Users users = (Users) o;
+        return id == users.id && Objects.equals(email, users.email) && Objects.equals(username, users.username) && Objects.equals(password, users.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password);
+        return Objects.hash(id, email, username, password);
     }
 
     @Override
     public String toString() {
         return "Users{" +
                 "id=" + id +
+                ", email='" + email + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
