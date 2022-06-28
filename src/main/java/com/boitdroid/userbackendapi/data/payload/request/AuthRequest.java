@@ -1,4 +1,4 @@
-package com.boitdroid.userbackendapi.payload.request;
+package com.boitdroid.userbackendapi.data.payload.request;
 
 public class AuthRequest {
     private String email;

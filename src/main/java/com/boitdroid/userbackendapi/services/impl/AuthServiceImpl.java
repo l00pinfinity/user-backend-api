@@ -1,8 +1,9 @@
-package com.boitdroid.userbackendapi.services;
+package com.boitdroid.userbackendapi.services.impl;
 
-import com.boitdroid.userbackendapi.models.Users;
-import com.boitdroid.userbackendapi.payload.request.AuthRequest;
+import com.boitdroid.userbackendapi.data.models.Users;
+import com.boitdroid.userbackendapi.data.payload.request.AuthRequest;
 import com.boitdroid.userbackendapi.repository.UserRepository;
+import com.boitdroid.userbackendapi.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;

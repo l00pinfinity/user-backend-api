@@ -1,4 +1,6 @@
-package com.boitdroid.userbackendapi.models;
+package com.boitdroid.userbackendapi.data.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,12 @@ public class Users {
     private @Id
     @GeneratedValue
     long id;
+
+    @JsonIgnore
     private String email;
     private String username;
+
+    @JsonIgnore
     private String password;
 
     public Users() {

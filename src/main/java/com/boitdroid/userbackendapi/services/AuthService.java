@@ -1,7 +1,7 @@
 package com.boitdroid.userbackendapi.services;
 
-import com.boitdroid.userbackendapi.models.Users;
-import com.boitdroid.userbackendapi.payload.request.AuthRequest;
+import com.boitdroid.userbackendapi.data.models.Users;
+import com.boitdroid.userbackendapi.data.payload.request.AuthRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
