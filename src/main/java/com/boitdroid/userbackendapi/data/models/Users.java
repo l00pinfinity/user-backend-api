@@ -1,84 +1,50 @@
 package com.boitdroid.userbackendapi.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Objects;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "users",uniqueConstraints = {@UniqueConstraint(columnNames = {"username"}),@UniqueConstraint(columnNames = {"email"})})
 public class Users {
-    private @Id
+    @Id
     @GeneratedValue
-    long id;
+    @Column(name = "user_id")
+    private long id;
 
-    @JsonIgnore
+    @Column(name = "email")
+    @NotEmpty
+    @Email
     private String email;
+
+    @Column(name = "username")
+    @NotEmpty
     private String username;
 
+    @Column(name = "password")
+    @NotEmpty
+    @Size(max = 99)
     @JsonIgnore
     private String password;
 
-    public Users() {
-    }
+    @Column(name = "reset_token")
+    @JsonIgnore
+    private String resetToken;
 
-    public Users(String email, String username, String password) {
-        this.email  = email;
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return id == users.id && Objects.equals(email, users.email) && Objects.equals(username, users.username) && Objects.equals(password, users.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, email, username, password);
-    }
-
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @NotEmpty
+    private Set<Roles> roles = new HashSet<>();
 }
