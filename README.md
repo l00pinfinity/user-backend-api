@@ -91,7 +91,7 @@ Reset token is sent to the user via provided email if it exists.
 
 ### Request
 
-`POST /api/reset??token=c52d4ed8-f4a2-41de-90ca-f97bc4a56e37`
+`POST /api/reset?token=c52d4ed8-f4a2-41de-90ca-f97bc4a56e37`
 
     curl --location --request POST 'http://localhost:8080/api/reset?token=c52d4ed8-f4a2-41de-90ca-f97bc4a56e37' \--header 'Content-Type: application/json' \--data-raw '{"password":"qwerty"}'
 
